@@ -5,19 +5,31 @@ import math
 pygame.init()
 
 FPS = 30
+
+# SIZE_X - height
 SIZE_X = 1000
+# SIZE_Y - width
 SIZE_Y = 800
+
 screen = pygame.display.set_mode((SIZE_Y, SIZE_X))
 
-background = rect(screen, (170, 255, 230), (0, 0, SIZE_Y, SIZE_X))
+BACKGROUND_COLOR = (170, 255, 230)
+BACKGROUND = rect(screen, BACKGROUND_COLOR, (0, 0, SIZE_Y, SIZE_X))
 
-# polygon(screen, (0, 0, 0), [(0,0), (20,200),
-#                                (100,100), (75,50), (50, 25)])
 
 def face(size_x, size_y):
+    """
+    draws a smiley in the middle of the given coordinates (dimensions)
+    :param size_x: input your height
+    :param size_y: input your width
+
+    """
+    # smiley radius is calculated relative to the smaller size (size_x or size_y)
     radius = (min(size_x, size_y))*0.3
+    # calculate coordinates of the center circle
     centr_x = size_x/2
     centr_y = size_y/2
+    #draw circle and perimeter
     circle(screen, (255, 255, 0), (centr_y, centr_x), radius)
     circle(screen, (0, 0, 0), (centr_y, centr_x), radius, 1)
 
@@ -25,12 +37,22 @@ def face(size_x, size_y):
 
     eyes(centr_x, centr_y, radius)
 
+
 def mouth(centr_x, centr_y, radius):
+    """
+    draws a rectangle (mouth) at coordinates (centr_x, centr_y),
+    the radius is used to compute the dimensions of the rectangle
+    :param centr_x: center coordinate x
+    :param centr_y: center coordinate x
+    :param radius: length of the rectangle
+    """
+
     start_y = centr_y - radius*0.5
     start_x = centr_x + radius/2
     fin_y = radius
     fin_x = radius/5
     rect(screen, (0, 0, 0), (start_y, start_x, fin_y, fin_x))
+
 
 def eyes(centr_x, centr_y, radius):
     right_x = centr_x - radius/4
@@ -59,7 +81,6 @@ def eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir
         start_x = eye_centr_x - radius_pupil
         start_y = eye_centr_y + radius/3
         tg_al = (radius_iris - radius_pupil) /(start_y - eye_centr_y)
-        # tg_al = (start_y - eye_centr_y)/(radius_iris - radius_pupil)
         hypotenuse = radius
         fin_y = start_y - ((hypotenuse**2)/(tg_al**2 + 1))**0.5
         fin_x = start_x - (hypotenuse**2 - (hypotenuse**2)/(tg_al**2 + 1))**0.5
@@ -69,7 +90,6 @@ def eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir
         start_x = eye_centr_x - radius_pupil
         start_y = eye_centr_y - radius / 3
         tg_al = (radius_iris - radius_pupil) / (start_y - eye_centr_y)
-        # tg_al = (start_y - eye_centr_y)/(radius_iris - radius_pupil)
         hypotenuse = radius
         fin_y = start_y + ((hypotenuse ** 2) / (tg_al ** 2 + 1)) ** 0.5
         fin_x = start_x - (hypotenuse ** 2 - (hypotenuse ** 2) / (tg_al ** 2 + 1)) ** 0.5
@@ -78,13 +98,7 @@ def eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir
 
 
 
-
-    pass
-
-
 face(SIZE_X, SIZE_Y)
-
-
 
 pygame.display.update()
 clock = pygame.time.Clock()

@@ -1,0 +1,94 @@
+[1mdiff --git a/lab3/smail.py b/lab3/smail.py[m
+[1mindex 8bb65a4..1d913c7 100644[m
+[1m--- a/lab3/smail.py[m
+[1m+++ b/lab3/smail.py[m
+[36m@@ -5,19 +5,31 @@[m [mimport math[m
+ pygame.init()[m
+ [m
+ FPS = 30[m
+[32m+[m
+[32m+[m[32m# SIZE_X - height[m
+ SIZE_X = 1000[m
+[32m+[m[32m# SIZE_Y - width[m
+ SIZE_Y = 800[m
+[32m+[m
+ screen = pygame.display.set_mode((SIZE_Y, SIZE_X))[m
+ [m
+[31m-background = rect(screen, (170, 255, 230), (0, 0, SIZE_Y, SIZE_X))[m
+[32m+[m[32mBACKGROUND_COLOR = (170, 255, 230)[m
+[32m+[m[32mBACKGROUND = rect(screen, BACKGROUND_COLOR, (0, 0, SIZE_Y, SIZE_X))[m
+ [m
+[31m-# polygon(screen, (0, 0, 0), [(0,0), (20,200),[m
+[31m-#                                (100,100), (75,50), (50, 25)])[m
+ [m
+ def face(size_x, size_y):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    draws a smiley in the middle of the given coordinates (dimensions)[m
+[32m+[m[32m    :param size_x: input your height[m
+[32m+[m[32m    :param size_y: input your width[m
+[32m+[m
+[32m+[m[32m    """[m
+[32m+[m[32m    # smiley radius is calculated relative to the smaller size (size_x or size_y)[m
+     radius = (min(size_x, size_y))*0.3[m
+[32m+[m[32m    # calculate coordinates of the center circle[m
+     centr_x = size_x/2[m
+     centr_y = size_y/2[m
+[32m+[m[32m    #draw circle and perimeter[m
+     circle(screen, (255, 255, 0), (centr_y, centr_x), radius)[m
+     circle(screen, (0, 0, 0), (centr_y, centr_x), radius, 1)[m
+ [m
+[36m@@ -25,13 +37,23 @@[m [mdef face(size_x, size_y):[m
+ [m
+     eyes(centr_x, centr_y, radius)[m
+ [m
+[32m+[m
+ def mouth(centr_x, centr_y, radius):[m
+[32m+[m[32m    """[m
+[32m+[m[32m    draws a rectangle (mouth) at coordinates (centr_x, centr_y),[m
+[32m+[m[32m    the radius is used to compute the dimensions of the rectangle[m
+[32m+[m[32m    :param centr_x: center coordinate x[m
+[32m+[m[32m    :param centr_y: center coordinate x[m
+[32m+[m[32m    :param radius: length of the rectangle[m
+[32m+[m[32m    """[m
+[32m+[m
+     start_y = centr_y - radius*0.5[m
+     start_x = centr_x + radius/2[m
+     fin_y = radius[m
+     fin_x = radius/5[m
+     rect(screen, (0, 0, 0), (start_y, start_x, fin_y, fin_x))[m
+ [m
+[32m+[m
+ def eyes(centr_x, centr_y, radius):[m
+     right_x = centr_x - radius/4[m
+     right_y = centr_y - radius/2[m
+[36m@@ -59,7 +81,6 @@[m [mdef eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir[m
+         start_x = eye_centr_x - radius_pupil[m
+         start_y = eye_centr_y + radius/3[m
+         tg_al = (radius_iris - radius_pupil) /(start_y - eye_centr_y)[m
+[31m-        # tg_al = (start_y - eye_centr_y)/(radius_iris - radius_pupil)[m
+         hypotenuse = radius[m
+         fin_y = start_y - ((hypotenuse**2)/(tg_al**2 + 1))**0.5[m
+         fin_x = start_x - (hypotenuse**2 - (hypotenuse**2)/(tg_al**2 + 1))**0.5[m
+[36m@@ -69,7 +90,6 @@[m [mdef eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir[m
+         start_x = eye_centr_x - radius_pupil[m
+         start_y = eye_centr_y - radius / 3[m
+         tg_al = (radius_iris - radius_pupil) / (start_y - eye_centr_y)[m
+[31m-        # tg_al = (start_y - eye_centr_y)/(radius_iris - radius_pupil)[m
+         hypotenuse = radius[m
+         fin_y = start_y + ((hypotenuse ** 2) / (tg_al ** 2 + 1)) ** 0.5[m
+         fin_x = start_x - (hypotenuse ** 2 - (hypotenuse ** 2) / (tg_al ** 2 + 1)) ** 0.5[m
+[36m@@ -78,14 +98,8 @@[m [mdef eyebrows(centr_y, centr_x, eye_centr_x, eye_centr_y, radius_pupil, radius_ir[m
+ [m
+ [m
+ [m
+[31m-[m
+[31m-    pass[m
+[31m-[m
+[31m-[m
+ face(SIZE_X, SIZE_Y)[m
+ [m
+[31m-[m
+[31m-[m
+ pygame.display.update()[m
+ clock = pygame.time.Clock()[m
+ finished = False[m
